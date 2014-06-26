@@ -1,6 +1,6 @@
 # ETA
 
-Estimated time of arrival.
+Estimated time to arrival.
 
 # API
 
@@ -33,7 +33,7 @@ Returns total length in seconds (estimated).
 
 Returns current number of iterations per second.
 
-## getPercentage()
+## getPercentageFormatted()
 
 Returns completion percentage.
 
