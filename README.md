@@ -25,6 +25,10 @@ Notifies estimator that one more iteration has finished.
 
 Returns number of seconds passed from start.
 
+## getEstimatedLengthInSeconds()
+
+Returns total length in seconds (estimated). 
+
 ## getIterationsPerSecond()
 
 Returns current number of iterations per second.
