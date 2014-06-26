@@ -1,7 +1,7 @@
 {
   "name": "node-eta",
   "version": "0.1.1",
-  "description": "Estimated time of arrival",
+  "description": "Estimated time to arrival",
   "main": "index.js",
   "repository": {
     "type": "git",
@@ -9,7 +9,7 @@
   },
   "keywords": [
     "eta",
-    "estimated time of arrival",
+    "estimated time to arrival",
     "estimated",
     "time",
     "arrival"
