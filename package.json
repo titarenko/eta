@@ -1,0 +1,23 @@
+{
+  "name": "node-eta",
+  "version": "0.1.0",
+  "description": "Estimated time of arrival",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/titarenko/eta.git"
+  },
+  "keywords": [
+    "eta",
+    "estimated time of arrival",
+    "estimated",
+    "time",
+    "arrival"
+  ],
+  "author": "Constantin Titarenko",
+  "license": "BSD",
+  "bugs": {
+    "url": "https://github.com/titarenko/eta/issues"
+  },
+  "homepage": "https://github.com/titarenko/eta"
+}
