@@ -62,7 +62,7 @@ Eta.prototype.getIterationsPerSecond = function () {
 	return this.getLengthInSeconds()/this.done;
 };
 
-Eta.prototype.getPercentage = function () {
+Eta.prototype.getPercentageFormatted = function () {
 	return (100*this.done/this.count).toFixed(1) + '%';
 };
 
