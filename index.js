@@ -1,3 +1,57 @@
+var util = require('util');
+
+module.exports = Eta;
+
+function Eta (count, options) {
+	this.count = count;
+
+	var optionsNumberFormatter = options && options.numberFormatter;
+	this.numberFormatter = typeof optionsNumberFormatter == 'function' ? optionsNumberFormatter : formatNumber;
+	
+	if (options && options.autoStart || options === true) {
+		this.start();
+	}
+}
+
+Eta.prototype.start = function () {
+	this.done = 0;
+	this.startedAt = new Date();
+};
+
+Eta.prototype.iterate = function (anything) {
+	this.done++;
+	if (anything) {
+		this.last = util.format.apply(this, arguments);
+	}
+};
+
+Eta.prototype.format = function () {
+	var layout = util.format.apply(this, arguments);
+	
+	var elapsed = (new Date() - this.startedAt)/1000;
+	var rate = this.done/elapsed;
+	var estimated = this.count/rate;
+	var progress = this.done/this.count;
+	var eta = estimated - elapsed;
+	var etah = secondsToStr(eta);
+
+	var fields = {
+		elapsed: elapsed,
+		rate: rate,
+		estimated: estimated,
+		progress: progress,
+		eta: eta,
+		etah: etah,
+		last: this.last
+	};
+
+	return layout.replace(/{{\S+?}}/g, function (match) {
+		var key = match.slice(2, match.length - 2);
+		var value = fields[key] || '';
+		return typeof value == 'number' ? value.toPrecision(4) : value;
+	});
+};
+
 function secondsToStr (seconds) {
 	return millisecondsToStr(seconds*1000);
 }
@@ -36,42 +90,6 @@ function millisecondsToStr (milliseconds) {
 	return 'less than a second'; //'just now' //or other string you like;
 }
 
-function Eta (count) {
-	this.count = count;
+function formatNumber (it) {
+	return it.toPrecision(4);
 }
-
-Eta.prototype.start = function () {
-	this.done = 0;
-	this.startedAt = new Date();
-};
-
-Eta.prototype.iterate = function () {
-	this.done++;
-};
-
-Eta.prototype.getLengthInSeconds = function () {
-	var now = new Date();
-	return (now.getTime() - this.startedAt.getTime())/1000;
-};
-
-Eta.prototype.getEstimatedLengthInSeconds = function () {
-	return this.getIterationsPerSecond()*this.count;
-};
-
-Eta.prototype.getIterationsPerSecond = function () {
-	return this.getLengthInSeconds()/this.done;
-};
-
-Eta.prototype.getPercentageFormatted = function () {
-	return (100*this.done/this.count).toFixed(1) + '%';
-};
-
-Eta.prototype.getEtaInSeconds = function () {
-	return this.getEstimatedLengthInSeconds() - this.getLengthInSeconds();
-};
-
-Eta.prototype.getEtaFormatted = function () {
-	return secondsToStr(this.getEtaInSeconds());
-};
-
-module.exports = Eta;
